@@ -6,7 +6,7 @@ from Lattice.Chain import create_chain
 from SpinSystem import SpinSystem
 from montecarlo import metropolis
 from Parallel_Tempering import Rep_exchange_mont
-from symplecticdynamics2 import time_step, midpoint_configuration_calculator
+from Symplectic_Dynamics_Calculator import time_step, midpoint_configuration_calculator
 
 
 positions, neighbours = create_chain(10)

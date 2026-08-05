@@ -49,6 +49,8 @@ def time_step(system, dt, total_time):
                     midpoints[i], midpoint_field
                 )
 
+                new.spins[i] /= np.linalg.norm(new.spins[i])
+
             # Convergence test
             error = np.max(np.linalg.norm(new.spins - previous.spins, axis=1))
 
