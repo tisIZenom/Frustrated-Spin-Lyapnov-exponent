@@ -19,7 +19,6 @@ class SpinSystem:
 
         self.positions = positions
         self.neighbours = neighbours
-
         self.N = len(positions)
 
         # Initializing the spins randomly

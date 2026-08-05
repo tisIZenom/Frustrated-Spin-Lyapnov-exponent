@@ -10,12 +10,7 @@ from Lattice.Chain import create_chain
 # First create a set of replicas of the same system
 # the first copy:
 
-position, neighbours = create_chain(int(input("what is the number of nodes?: ")))
-# This created the system
-#
 # nnow I just make the temp gradient from 0.1
-spin = SpinSystem(position, neighbours)
-
 # rather have a class replica
 #
 
@@ -27,30 +22,22 @@ class Replica:
         pass
 
 
-temperature = float(
-    input("What is the range of temperatures to sample (upto  0.1)?:  ")
-)
+def Rep_exchange_mont(system, SpinSystem):
 
-
-Replica_resolution = int(input("How many parallel replicas would you like?: "))
-
-
-temperature_gradient = np.linspace(0.01, 0.5, Replica_resolution)
-
-
-def Rep_exchange_mont(spin, Replica_resolution, temperature_gradient, SpinSystem):
-
+    Num_replicas = 10
+    temperature_gradient = np.linspace(0.01, 0.5, Num_replicas)
     delta = []
-    replicas = []
+    replica_list = []
     energies = []
+    energy_evolution = []
 
     for T in temperature_gradient:
-        new_spin = SpinSystem(position, neighbours)
+        new_spin = system
 
         print(new_spin.total_energy())
         replica = Replica(new_spin, T)
 
-        replicas.append(replica)
+        replica_list.append(replica)
 
     # Now assign a temperature for each gradient
     # and also just metropolis it
@@ -59,28 +46,26 @@ def Rep_exchange_mont(spin, Replica_resolution, temperature_gradient, SpinSystem
     swap = 200
 
     for i in range(swap):
-        for replica in replicas:
+        for replica in replica_list:
             metropolis(replica.spin, replica.temperature, sweeps)
 
-        energies = [replica.spin.total_energy() for replica in replicas]
+        energies = [replica.spin.total_energy() for replica in replica_list]
 
-        for i in range(Replica_resolution - 1):
+        for i in range(Num_replicas - 1):
             delta_value = (
-                (1 / replicas[i].temperature) - (1 / replicas[i + 1].temperature)
+                (1 / replica_list[i].temperature)
+                - (1 / replica_list[i + 1].temperature)
             ) * (energies[i] - energies[i + 1])
 
             delta.append(delta_value)
 
             P = min(1, np.exp(delta[i]))
             if np.random.rand() < P:
-                replicas[i].spin, replicas[i + 1].spin = (
-                    replicas[i + 1].spin,
-                    replicas[i].spin,
+                replica_list[i].spin, replica_list[i + 1].spin = (
+                    replica_list[i + 1].spin,
+                    replica_list[i].spin,
                 )
+        energy_evolution1 = replica_list[0].spin.total_energy()
+        energy_evolution.append(energy_evolution1)
 
-    return replicas[0]
-
-
-total = Rep_exchange_mont(spin, Replica_resolution, temperature_gradient, SpinSystem)
-
-print(total.spin.total_energy())
+    return replica_list[0].spin, energy_evolution

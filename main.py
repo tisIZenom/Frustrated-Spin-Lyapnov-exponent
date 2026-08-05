@@ -1,6 +1,6 @@
 ## This is where I will try to test whatever I have written
 
-
+import matplotlib.pyplot as plt
 import numpy as np
 from Lattice.Chain import create_chain
 from SpinSystem import SpinSystem
@@ -16,14 +16,17 @@ system = SpinSystem(positions, neighbours)
 
 print(system.total_energy())
 
-temperature_gradient = np.linspace(0.01, 0.5, 10)
+system_base, energy_evolution = Rep_exchange_mont(system, SpinSystem)
 
-
-system_base = Rep_exchange_mont(system, 10, temperature_gradient, SpinSystem)
+print(energy_evolution)
 
 
 print(system_base.total_energy())
 
-system_evolved = time_step(system_base, 0.1, 10)
+print("This is how the energy evolved over time ")
+system_evolved, energy_list = time_step(system_base, 0.1, 10)
 
-print(system_evolved.total_energy)
+
+print(energy_list)
+
+print(system_evolved.total_energy())
