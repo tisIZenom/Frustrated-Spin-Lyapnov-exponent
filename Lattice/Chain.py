@@ -19,3 +19,8 @@ def create_chain(N):
         neighbours.append([left, right])
 
     return positions, neighbours
+
+
+positions, neighbours = create_chain(10)
+
+print(neighbours)

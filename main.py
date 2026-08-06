@@ -9,8 +9,17 @@ from Parallel_Tempering_Corrected import Rep_exchange_mont
 from Symplectic_Dynamics_Calculator import time_step, midpoint_configuration_calculator
 from Decorrelator import decorrelator
 
+from Lattice.create_kogame import find_nn_pairs, build_nn_list
+
+
 # Create the system layout
-positions, neighbours = create_chain(N=10)
+
+positions, cell_index, nn_pairs = find_nn_pairs(3, 3)
+
+neighbours = build_nn_list(len(positions), nn_pairs)
+
+print(neighbours)
+
 
 # Assign the spins
 system = SpinSystem(positions, neighbours)

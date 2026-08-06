@@ -78,7 +78,7 @@ class SpinSystem:
         return B_local
 
     # Trying to make a monte carlo system I need a trial move to slightly rotate the spin and check energy.
-    def trial_move(self, i, epsilon=0.03):
+    def trial_move(self, i, epsilon=0.005):
         target_position = i
 
         old_config = self.spins[target_position].copy()
