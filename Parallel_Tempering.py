@@ -42,8 +42,8 @@ def Rep_exchange_mont(system, SpinSystem):
     # Now assign a temperature for each gradient
     # and also just metropolis it
 
-    sweeps = 200
-    swap = 200
+    sweeps = 100
+    swap = 100
 
     for i in range(swap):
         for replica in replica_list:

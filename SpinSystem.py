@@ -93,6 +93,13 @@ class SpinSystem:
 
         return old_config
 
+    def perturbation(self, target, epsilon):
+
+        delta = epsilon * np.random.randn(3)
+
+        self.spins[target] += delta
+        self.spins[target] /= np.linalg.norm(self.spins[target])
+
 
 #########################################################################
 
