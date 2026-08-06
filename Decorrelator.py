@@ -22,8 +22,6 @@ def decorrelator(system):
     perturbed.perturbation(Target, 0.05)
 
     ## Now simply let them two evolve:
-    print(type(original))
-    print(type(perturbed))
 
     for i in range(time):
         original, energy_original = time_step(original, 0.1, 10)

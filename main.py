@@ -1,29 +1,26 @@
 ## This is where I will try to test whatever I have written
 
+
 import matplotlib.pyplot as plt
-import numpy as np
 from Lattice.Chain import create_chain
 from SpinSystem import SpinSystem
 from montecarlo import metropolis
-from Parallel_Tempering import Rep_exchange_mont
+from Parallel_Tempering_Corrected import Rep_exchange_mont
 from Symplectic_Dynamics_Calculator import time_step, midpoint_configuration_calculator
 from Decorrelator import decorrelator
 
+# Create the system layout
+positions, neighbours = create_chain(N=10)
 
-positions, neighbours = create_chain(10)
+# Assign the spins
 system = SpinSystem(positions, neighbours)
-print(system.total_energy())
-system_base, energy_evolution = Rep_exchange_mont(system, SpinSystem)
-print(energy_evolution)
-print(system_base.total_energy())
 
-print("This is how the energy evolved over time ")
-system_evolved, energy_list = time_step(system_base, 0.1, 10)
+# Temper the configuration using Parallel_Tempering
+system, energy_matrix = Rep_exchange_mont(system, SpinSystem)
 
-
-print(energy_list)
-
-print(system_evolved.total_energy())
+for j in range(10):
+    plt.plot(energy_matrix[:, j])
 
 
-decorrelator(system_evolved)
+# Use the decorrelator
+decorrelator(system)

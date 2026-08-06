@@ -1,6 +1,5 @@
 import numpy as np
 import copy
-
 from Parallel_Tempering import Rep_exchange_mont
 
 # system = replica[0]
