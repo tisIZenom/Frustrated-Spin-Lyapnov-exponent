@@ -58,7 +58,7 @@ plt.imshow(
     data.positional,
     origin="lower",
     aspect="auto",
-    extent=[0, system.N, 0, data.positional.shape[0] * data.dt],
+    extent=[0, system.N, 0, data.positional.shape[0] * float(data.dt)],
 )
 
 plt.xlabel("Lattice site")
